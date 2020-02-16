@@ -1,10 +1,8 @@
 ﻿using System;
 namespace Weather.Application.Domain.Contracts
 {
-    public class IApplication
+    public interface IApplication
     {
-        public IApplication()
-        {
-        }
+        void Run();
     }
 }

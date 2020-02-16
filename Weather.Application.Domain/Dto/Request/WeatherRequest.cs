@@ -1,10 +1,11 @@
 ﻿using System;
-namespace Weather.Application.Domain.Dto
+using System.Collections;
+using System.Collections.Generic;
+
+namespace Weather.Application.Domain.Dto.Request
 {
-    public class WeatherRequest
+    public class WeatherRequest : AbstractRequest
     {
-        public WeatherRequest()
-        {
-        }
+        public string City { get; set; }
     }
 }

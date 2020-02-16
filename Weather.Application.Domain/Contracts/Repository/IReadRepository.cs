@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Weather.Application.Domain.Contracts.Repository
 {
-    public class IRepository
+    public interface IReadRepository<T>
     {
-        public IRepository()
-        {
-        }
+        T Get(int id);
+        IList<T> GetAll();
+        public IQueryable<T> Query();
     }
 }

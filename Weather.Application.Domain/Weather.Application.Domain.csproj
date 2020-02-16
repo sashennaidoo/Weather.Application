@@ -4,4 +4,38 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Dto\" />
+    <Folder Include="Services\" />
+    <Folder Include="Contracts\" />
+    <Folder Include="Contracts\Http\" />
+    <Folder Include="Contracts\Cache\" />
+    <Folder Include="Contracts\Builders\" />
+    <Folder Include="Resolvers\" />
+    <Folder Include="Logging\" />
+    <Folder Include="Enums\" />
+    <Folder Include="Dto\Request\" />
+    <Folder Include="Contracts\Factories\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Extensions\Converters\" />
+    <Folder Include="Contracts\Repository\" />
+    <Folder Include="Contracts\Entities\" />
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.1" />
+    <PackageReference Include="System.Reflection" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Contracts\Formatting\IFormattable.cs" />
+    <Compile Remove="Class1.cs" />
+    <Compile Remove="Dto\WeatherDetailsNeat.cs" />
+    <Compile Remove="Dto\WeatherInfoBase.cs" />
+    <Compile Remove="Dto\WeatherDetailJson.cs" />
+    <Compile Remove="Dto\WeatherDetailRaw.cs" />
+    <Compile Remove="Dto\WeatherDetailRaw.cs" />
+  </ItemGroup>
 </Project>

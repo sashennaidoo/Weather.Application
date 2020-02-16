@@ -12,4 +12,15 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Builders\" />
+    <Folder Include="Formatters\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Repositories\CityRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Weather.Application.Service\Weather.Application.Service.csproj" />
+  </ItemGroup>
 </Project>
