@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
+using Weather.Application.Domain.Exceptions;
 using Weather.Application.Domain.Resolvers;
 
 namespace Weather.Application.Domain.Dto
@@ -55,7 +56,7 @@ namespace Weather.Application.Domain.Dto
             else if (format == "F")
                 return ToFormattedString(this, 0);
             else
-            { throw new ArgumentException("Format does not exist"); }
+            { throw new WeatherFormatException("Invalid Format"); }
                 
         }
 

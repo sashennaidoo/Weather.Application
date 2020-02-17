@@ -66,23 +66,29 @@ namespace Weather.Application.Domain.Services
             try
             {
                 var result = await _restclient.GetAsync(queryBuilder.Uri);
-                using (var stream = await result.Content.ReadAsStreamAsync())
-                using (var streamReader = new StreamReader(stream))
-                {
-                    var data = streamReader.ReadToEnd();
-                    return JsonConvert.DeserializeObject<T>(data
-                                                            , new JsonSerializerSettings {
-                                                                                        ContractResolver = new JsonResolver()
-                                                                                        , Converters = new List<JsonConverter> { new MicrosecondEpochConverter() }
-                                                                                        }
-                                                            );
-                }
-  
+                // Check if we recieved an OK back from the server
+                result.EnsureSuccessStatusCode();
+                // Create a StreamReader to read the body of the response
+                using var stream = await result.Content.ReadAsStreamAsync();
+                using var streamReader = new StreamReader(stream);
+                var data = streamReader.ReadToEnd();
+                // Deserialize using our custom resolver and time converter
+                return JsonConvert.DeserializeObject<T>(data
+                                                        , new JsonSerializerSettings
+                                                        {
+                                                            ContractResolver = new JsonResolver()
+                                                            , Converters = new List<JsonConverter> { new SecondEpochConverter() }
+                                                        }
+                                                        );
+
             }
             catch (HttpRequestException requestException)
             {
-                // Todo : Handle Exception
                 throw requestException;
+            }
+            catch (AggregateException aeg)
+            {
+                throw aeg;
             }
         }
 
@@ -95,6 +101,7 @@ namespace Weather.Application.Domain.Services
             try
             {
                 var response = await _restclient.PostAsync(new Uri(_restclient.BaseAddress, endpoint), content);
+                // Check if we recieved an OK back from the server
                 response.EnsureSuccessStatusCode();
             }
             catch (HttpRequestException requestEx)
@@ -115,11 +122,27 @@ namespace Weather.Application.Domain.Services
                 var response = await _restclient.PutAsync(new Uri(_restclient.BaseAddress, endpoint), content);
                 // Check if we recieved an OK back from the server
                 response.EnsureSuccessStatusCode();
-                return JsonConvert.DeserializeObject<T>(response.Content.ToString(), new JsonSerializerSettings { ContractResolver = new JsonResolver() });
+                // Create a StreamReader to read the body of the response
+                using var stream = await response.Content.ReadAsStreamAsync();
+                using var streamReader = new StreamReader(stream);
+                var data = streamReader.ReadToEnd();
+                // Deserialize using our custom resolver and time converter
+                return JsonConvert.DeserializeObject<T>(data
+                                                        , new JsonSerializerSettings
+                                                        {
+                                                            ContractResolver = new JsonResolver()
+                                                            , Converters = new List<JsonConverter> { new SecondEpochConverter() }
+                                                        }
+                                                        );
+
             }
-            catch (HttpRequestException requestEx)
+            catch (HttpRequestException requestException)
             {
-                throw requestEx;
+                throw requestException;
+            }
+            catch (AggregateException aeg)
+            {
+                throw aeg;
             }
 
         }

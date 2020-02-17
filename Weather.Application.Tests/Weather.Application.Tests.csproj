@@ -23,6 +23,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Repositories\CityRepository.cs" />
+    <Compile Remove="Builders\WeatherInfoBuilderTest.cs" />
+    <Compile Remove="Builders\WeatherInfoBuilderTests.cs" />
+    <Compile Remove="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Weather.Application.Service\Weather.Application.Service.csproj" />

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Weather.Application.Domain.Extensions.Converters
 {
-    public class MicrosecondEpochConverter : JsonConverter
+    public class SecondEpochConverter : JsonConverter
     {
         private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 

@@ -15,7 +15,10 @@ namespace Weather.Application.ConsoleApp
         private readonly ILogger _logger;
         private readonly IWeatherBuilderFactory _weatherBuilderFactory;
 
-        private Dictionary<string, List<string>> choiceMap => new Dictionary<string, List<string>>
+        // A map the inputs from the console so that we don't have to
+        // perform the same set of steps for checking input
+        // which would seem very feature envious on struct checking
+        private Dictionary<string, List<string>> _choiceMap => new Dictionary<string, List<string>>
         {
             { "Run", new List<string>{ "1", "2" } },
             { "City", new List<string>{ "1", "2"} },
@@ -24,7 +27,7 @@ namespace Weather.Application.ConsoleApp
 
         #endregion Private Members
 
-        public WeatherApplication(ILogger logger, IWeatherBuilderFactory weatherBuilderFactory, IRequestFactory requestFactory)
+        public WeatherApplication(ILogger logger, IWeatherBuilderFactory weatherBuilderFactory)
         {
             _logger = logger;
             _weatherBuilderFactory = weatherBuilderFactory;
@@ -53,7 +56,9 @@ namespace Weather.Application.ConsoleApp
 
             if (city == 2)
                 return;
-
+            // Get the selection from the console and parse into the Weather Display Type enum
+            // In this case, the enum is mapped to the input from the console
+            // (1 - Raw) , (2 - Details), (3 - Info)  
             if (!Enum.TryParse(ProcessFormatSelection(), out WeatherDisplayType formatSelection))
             {
                 _logger.LogCritical("Unable to read Format selection");
@@ -61,6 +66,8 @@ namespace Weather.Application.ConsoleApp
             }
             try
             {
+                // Go to the Builder Factory and create an instance of a builder as per the
+                // WeatherDisplayType enum and process to a string
                 var formatted = _weatherBuilderFactory.Create(formatSelection).BuildAndFormat(city);
                 Console.WriteLine(formatted);
             }
@@ -68,11 +75,15 @@ namespace Weather.Application.ConsoleApp
             {
                 Console.WriteLine($"Error occured during building of Weather information {ex} ");
             }
-            // Catch Format Exceptions
+            catch (WeatherFormatException wex)
+            {
+                Console.WriteLine($"Error occured during formatting of Weather information {wex} ");
+            }
+            finally
+            {
+                Console.ReadKey();
+            }
             
-            
-
-            Console.ReadKey();
         }
 
         #region Processors
@@ -81,7 +92,7 @@ namespace Weather.Application.ConsoleApp
         {
             ShowRunOptions();
             var runChoice = Console.ReadLine();
-            var options = choiceMap["Run"];
+            var options = _choiceMap["Run"];
 
             _logger.LogDebug($"Run Option Selected {runChoice}");
 
@@ -99,7 +110,7 @@ namespace Weather.Application.ConsoleApp
 
         private string ProcessCitySelection()
         {
-            var options = choiceMap["City"];
+            var options = _choiceMap["City"];
             Console.WriteLine("We currently only support Cape Town's weather");
             ShowCityOptions();
 
@@ -118,7 +129,7 @@ namespace Weather.Application.ConsoleApp
 
         private string ProcessFormatSelection()
         {
-            var options = choiceMap["Format"];
+            var options = _choiceMap["Format"];
             Console.WriteLine("How would you like to view the data?");
             ShowFormatOptions();
 

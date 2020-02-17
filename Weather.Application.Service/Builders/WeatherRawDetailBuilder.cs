@@ -4,6 +4,7 @@ using Weather.Application.Domain.Contracts.Factories;
 using Weather.Application.Domain.Contracts.Http;
 using Weather.Application.Domain.Contracts.Repository;
 using Weather.Application.Domain.Dto;
+using Weather.Application.Domain.Exceptions;
 
 namespace Weather.Application.Service.Builders
 {
@@ -20,9 +21,21 @@ namespace Weather.Application.Service.Builders
 
         public override string BuildAndFormat(int cityId)
         {
-            var weatherDetail = Build(cityId);
-
-            return weatherDetail.ToString("R", null);
+            try
+            {
+                var weatherDetail = Build(cityId);
+                return weatherDetail.ToString("R", null);
+            }
+            catch (WeatherBuilderException wex)
+            {
+                _logger.LogCritical($"Unable to process request due to exception : {wex}");
+                throw wex;
+            }
+            catch (WeatherFormatException wfex)
+            {
+                _logger.LogCritical($"Unable to process request due to exception : {wfex}");
+                throw wfex;
+            }
         }
     }
 

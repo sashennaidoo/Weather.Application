@@ -7,6 +7,7 @@ using Weather.Application.Domain.Contracts.Http;
 using Weather.Application.Domain.Contracts.Repository;
 using Weather.Application.Domain.Dto;
 using Weather.Application.Domain.Dto.Request;
+using Weather.Application.Domain.Exceptions;
 
 namespace Weather.Application.Service.Builders
 {
@@ -30,10 +31,15 @@ namespace Weather.Application.Service.Builders
                 _logger.LogDebug("Formatting into nicer format");
                 return weatherDetail.ToString("F", null);
             }
-            catch(Exception ex)
+            catch(WeatherBuilderException wex)
             {
-                _logger.LogCritical($"Unable to process request due to exception : {ex}");
-                throw;
+                _logger.LogCritical($"Unable to process request due to exception : {wex}");
+                throw wex;
+            }
+            catch(WeatherFormatException wfex)
+            {
+                _logger.LogCritical($"Unable to process request due to exception : {wfex}");
+                throw wfex;
             }
             
         }

@@ -39,7 +39,7 @@ namespace Weather.Application.Service.Builders
             if (city is null)
             {
                 _logger.LogError($"City Not Found for id {cityId}");
-                return null;
+                throw new WeatherBuilderException("City Not Found", null);
             }
 
             var request = _requestFactory.CreateRequest(city.Name);
@@ -47,10 +47,10 @@ namespace Weather.Application.Service.Builders
             _logger.LogDebug($"Builder start for Weather Details");
             try
             {
-                var response = _restClient.Get(request.GetKeyValuePairs(), _endpoint);
+                var response =  _restClient.Get(request.GetKeyValuePairs(), _endpoint);
                 return response.Result;
             }
-            catch (HttpRequestException ex)
+            catch (AggregateException ex)
             {
                 _logger.LogCritical($"WeatherDetailBuilder Exception during request {ex.Message}");
                 throw new WeatherBuilderException("Exception occurred whilst attempting Api Call", ex);

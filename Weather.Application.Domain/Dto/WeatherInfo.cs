@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using Weather.Application.Domain.Exceptions;
 
 namespace Weather.Application.Domain.Dto
 {
@@ -38,7 +39,7 @@ namespace Weather.Application.Domain.Dto
             if (format == "F")
                 return ToFormattedString();
             else
-                throw new ArgumentException("Invalid format");
+                throw new WeatherFormatException("Invalid format");
         }
 
         public string ToFormattedString()

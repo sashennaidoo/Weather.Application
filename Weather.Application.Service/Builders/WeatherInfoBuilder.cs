@@ -43,6 +43,11 @@ namespace Weather.Application.Service.Builders
                 _logger.LogCritical($"WeatherDetailBuilder Exception during request {ex.Message}");
                 throw new WeatherBuilderException("Exception occured while attempting Api call", ex);
             }
+            catch(AggregateException aeg)
+            {
+                _logger.LogCritical($"WeatherDetailBuilder Exception during request {aeg.Message}");
+                throw new WeatherBuilderException("Exception occured while attempting Api call", aeg);
+            }
         }
 
         public override string BuildAndFormat(int cityId)
@@ -54,10 +59,15 @@ namespace Weather.Application.Service.Builders
                 _logger.LogDebug("Formatting into nicer format");
                 return weatherDetail.ToString("F", null);
             }
-            catch (Exception ex)
+            catch (WeatherBuilderException wex)
             {
-                _logger.LogCritical($"Unable to process request due to exception : {ex}");
-                throw;
+                _logger.LogCritical($"Unable to process request due to exception : {wex}");
+                throw wex;
+            }
+            catch (WeatherFormatException wfex)
+            {
+                _logger.LogCritical($"Unable to process request due to exception : {wfex}");
+                throw wfex;
             }
         }
     }
