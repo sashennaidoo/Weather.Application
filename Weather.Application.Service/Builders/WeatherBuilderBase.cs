@@ -15,14 +15,14 @@ namespace Weather.Application.Service.Builders
     {
         protected readonly ILogger _logger;
         protected readonly IRestClient<WeatherDetails> _restClient;
-        protected readonly IReadRepository<City> _cityRepository;
+        protected readonly IReadonlyRepository<City> _cityRepository;
         protected readonly IRequestFactory _requestFactory;
         // Todo : Abstract weather into a more domain friendly place away
         protected const string _endpoint = "weather";
 
         public WeatherBuilderBase(ILogger logger
                                     , IRestClient<WeatherDetails> restClient
-                                    , IReadRepository<City> cityRepository
+                                    , IReadonlyRepository<City> cityRepository
                                     , IRequestFactory requestFactory)
         {
             _logger = logger;

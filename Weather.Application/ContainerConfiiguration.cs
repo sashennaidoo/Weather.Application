@@ -36,7 +36,7 @@ namespace Weather.Application.ConsoleApp
                                                 .As<ILogger>();
 
             //City Repository
-            containerBuilder.RegisterType<CityRepository>().As<IReadRepository<City>>();
+            containerBuilder.RegisterType<CityRepository>().As<IReadonlyRepository<City>>();
             // Weather Builder services
             containerBuilder.RegisterType<WeatherBuilderFactory>().As<IWeatherBuilderFactory>();
             

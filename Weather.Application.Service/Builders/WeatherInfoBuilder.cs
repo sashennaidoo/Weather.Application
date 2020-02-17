@@ -14,7 +14,7 @@ namespace Weather.Application.Service.Builders
     {
         public WeatherInfoBuilder(ILogger logger
                                   , IRestClient<WeatherDetails> restClient
-                                  , IReadRepository<City> cityRepository
+                                  , IReadonlyRepository<City> cityRepository
                                   , IRequestFactory requestFactory)
             : base(logger,restClient, cityRepository, requestFactory)
         {

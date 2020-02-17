@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Weather.Application.Domain.Contracts.Repository
 {
-    public interface IReadRepository<T>
+    public interface IReadonlyRepository<T>
     {
         T Get(int id);
         IList<T> GetAll();

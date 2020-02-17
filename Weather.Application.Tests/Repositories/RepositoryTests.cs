@@ -16,6 +16,21 @@ namespace Weather.Application.Tests.Repositories
             _repo = new CityRepository();
         }
 
+        [Test]
+        public void TestCtor_WithListOfCities_ShouldSetListToPassedIn()
+        {
+            var citiesList = new List<City>
+            {
+                {  new City { Code = 1, Name = "Cape Town" } }
+                , { new City { Code = 2, Name = "Durban" } }
+                , { new City { Code = 3, Name = "Johannesburg" } }
+            };
+
+            _repo = new CityRepository(citiesList);
+
+            Assert.AreEqual(3, _repo.GetAll().Count);
+        }
+
         [TestCase(1)]
         public void TestGet_WithValidId_ShouldReturnCityObject(int cityId)
         {

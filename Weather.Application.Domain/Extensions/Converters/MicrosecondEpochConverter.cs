@@ -15,7 +15,7 @@ namespace Weather.Application.Domain.Extensions.Converters
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (reader.Value == null) { return null; }
-            return _epoch.AddSeconds((long)reader.Value);
+            return _epoch.AddSeconds((long)reader.Value / 1000d);
         }
 
         public override bool CanConvert(Type objectType)
