@@ -11,12 +11,15 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Builders\" />
     <Folder Include="Formatters\" />
     <Folder Include="Repositories\" />
+    <Folder Include="Factories\" />
+    <Folder Include="TestFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Repositories\CityRepository.cs" />

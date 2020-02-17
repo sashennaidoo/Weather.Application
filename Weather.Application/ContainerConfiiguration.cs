@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using Microsoft.Extensions.Logging;
+using Weather.Application.ConsoleApp.ContainerRegistration;
 using Weather.Application.ConsoleApp.Managers;
 using Weather.Application.Domain.Contracts;
 using Weather.Application.Domain.Contracts.Builders;
@@ -36,7 +37,7 @@ namespace Weather.Application.ConsoleApp
                                                 .As<ILogger>();
 
             //City Repository
-            containerBuilder.RegisterType<CityRepository>().As<IReadonlyRepository<City>>();
+            containerBuilder.RegisterType<CityRepository>().As<IReadonlyRepository<City>>().UsingConstructor(new DefaultConstructorSelector());
             // Weather Builder services
             containerBuilder.RegisterType<WeatherBuilderFactory>().As<IWeatherBuilderFactory>();
             
