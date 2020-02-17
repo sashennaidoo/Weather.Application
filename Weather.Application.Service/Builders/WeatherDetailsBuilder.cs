@@ -38,7 +38,7 @@ namespace Weather.Application.Service.Builders
             }
             catch(WeatherFormatException wfex)
             {
-                _logger.LogCritical($"Unable to process request due to exception : {wfex}");
+                _logger.LogError($"Unable to process request due to exception : {wfex}");
                 throw wfex;
             }
             

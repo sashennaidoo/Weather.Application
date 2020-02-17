@@ -33,7 +33,7 @@ namespace Weather.Application.ConsoleApp
 
             // We will be using Microsofts logging extension
             containerBuilder.Register((c,p) => new LogFactory()
-                                                .CreateLogger(Domain.Enums.LoggerType.Console, Microsoft.Extensions.Logging.LogLevel.Error, "Weather", null))
+                                                .CreateLogger(Domain.Enums.LoggerType.Console, config.LogLevel, "Weather", null))
                                                 .As<ILogger>();
 
             //City Repository

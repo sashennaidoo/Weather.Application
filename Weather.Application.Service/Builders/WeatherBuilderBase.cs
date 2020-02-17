@@ -34,25 +34,30 @@ namespace Weather.Application.Service.Builders
 
         public virtual IFormattable Build(int cityId)
         {
+            
             // First get the correct city by the Id passed in
+            _logger.LogDebug($"Getting City from repository");
             var city = _cityRepository.Get(cityId);
             if (city is null)
             {
                 _logger.LogError($"City Not Found for id {cityId}");
-                throw new WeatherBuilderException("City Not Found", null);
+                throw new WeatherBuilderException($"City not found for Id : {cityId}");
             }
 
+            _logger.LogDebug($"Creating Weather request");
             var request = _requestFactory.CreateRequest(city.Name);
             // First we want to build
             _logger.LogDebug($"Builder start for Weather Details");
             try
             {
+                _logger.LogDebug($"Calling Weather Api");
                 var response =  _restClient.Get(request.GetKeyValuePairs(), _endpoint);
+                _logger.LogDebug("Call Success - Returning Weather Details Object");
                 return response.Result;
             }
             catch (AggregateException ex)
             {
-                _logger.LogCritical($"WeatherDetailBuilder Exception during request {ex.Message}");
+                _logger.LogError($"WeatherDetailBuilder Exception during request {ex.Message}");
                 throw new WeatherBuilderException("Exception occurred whilst attempting Api Call", ex);
             }
         }
