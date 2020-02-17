@@ -15,12 +15,12 @@ namespace Weather.Application.Service.Factories
     {
         private ILogger _logger;
         private IRestClient<WeatherDetails> _restClient;
-        private IReadRepository<City> _cityRepository;
+        private IReadonlyRepository<City> _cityRepository;
         private IRequestFactory _requestFactory;
 
         public WeatherBuilderFactory(ILogger logger
                                     , IRestClient<WeatherDetails> restClient
-                                    , IReadRepository<City> cityRepository
+                                    , IReadonlyRepository<City> cityRepository
                                     , IRequestFactory requestFactory)
         {
             _logger = logger;
