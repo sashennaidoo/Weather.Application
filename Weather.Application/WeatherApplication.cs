@@ -81,7 +81,13 @@ namespace Weather.Application.ConsoleApp
             }
             finally
             {
-                Console.ReadKey();
+                // For Easier testing of the application
+                Console.WriteLine("Would you like to repeat the process");
+                Console.WriteLine("1. Yes");
+                Console.WriteLine("Any other key - Exit");
+                var repeat = Console.ReadLine();
+                if (repeat == "1")
+                    Run();
             }
             
         }
