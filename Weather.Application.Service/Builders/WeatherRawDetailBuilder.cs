@@ -23,7 +23,9 @@ namespace Weather.Application.Service.Builders
         {
             try
             {
+                _logger.LogDebug($"WeatherDetailsBuilder - Executing Build with request");
                 var weatherDetail = Build(cityId);
+                _logger.LogDebug("Formatting into nicer format");
                 return weatherDetail.ToString("R", null);
             }
             catch (WeatherBuilderException wex)
@@ -33,7 +35,7 @@ namespace Weather.Application.Service.Builders
             }
             catch (WeatherFormatException wfex)
             {
-                _logger.LogCritical($"Unable to process request due to exception : {wfex}");
+                _logger.LogError($"Unable to process request due to exception : {wfex}");
                 throw wfex;
             }
         }
